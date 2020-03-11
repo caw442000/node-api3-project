@@ -25,6 +25,8 @@ router.put('/:id', (req, res) => {
 
 function validatePostId(req, res, next) {
   // do your magic!
+  Posts.getById(req.params.id)
+  
 }
 
 module.exports = router;
