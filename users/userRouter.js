@@ -47,7 +47,14 @@ router.get('/', (req, res) => {
 
 router.get('/:id', validateUserId, (req, res) => {
   // do your magic!
-  res.status(200).json(req.user)
+  Users.getById(req.params.id)
+  .then(user => {
+    res.status(200).json(user)
+  })
+  .catch(error => {
+    res.status(500).json({error: "Unable to locate user"})
+  })
+
 
 });
 
@@ -62,12 +69,28 @@ router.get('/:id/posts', validateUserId, (req, res) => {
   })
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validateUserId, (req, res) => {
   // do your magic!
+  Users.remove(req.params.id)
+  .then(user => {
+    res.status(200).json(user)
+  })
+  .catch(err => {
+    res.status(500).json({error: " unable to delete user"})
+  })
+
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', validateUserId, validateUser, (req, res) => {
   // do your magic!
+  Users.update(req.params.id, req.body)
+  .then(user => {
+    res.status(200).json(user)
+  })
+  .catch(err => {
+    res.status(500).json({error: "unable to update user"})
+  })
+
 });
 
 //custom middleware
