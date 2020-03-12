@@ -35,6 +35,8 @@ router.post('/:id/posts', validatePost, validateUserId, (req, res) => {
 
 router.get('/', (req, res) => {
   // do your magic!
+  const environment = process.env;
+  const PORT = process.env.PORT || 5000;
   Users.get()
     .then(user => {
       res.status(200).json(user)
